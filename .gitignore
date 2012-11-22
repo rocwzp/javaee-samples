@@ -1,4 +1,11 @@
-*.class
+
+target
+.settings
+.classpath
+.project
+.springBeans
+bin
+build
 
 # Package Files #
 *.jar
