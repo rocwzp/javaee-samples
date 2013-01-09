@@ -22,7 +22,7 @@ public class OrderGenerator
 {
 
 	@SuppressWarnings("unused")
-	@Schedule(/*second="0",*/ minute="*/5", hour="*")
+	@Schedule(second="0", minute="*/5", hour="*")
 	public void generateOrders() throws Exception
 	{
 		if(!Constants.GENERATE_TEST_ORDERS){

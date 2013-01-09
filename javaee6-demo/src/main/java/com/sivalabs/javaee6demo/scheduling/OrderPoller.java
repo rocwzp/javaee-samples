@@ -30,7 +30,7 @@ public class OrderPoller
 	@Inject
 	private OrderBO orderBO;
 	
-	@Schedule(minute="*/15", hour="*")
+	@Schedule(second="0", minute="*/15", hour="*")
 	public void pollForNewOrders()
 	{
 		System.err.println("Polling for new Orders at "+new Date());

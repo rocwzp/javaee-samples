@@ -6,7 +6,7 @@
 	
 	<persistence-unit name="jmsdemo" transaction-type="JTA">
 	
-		<jta-data-source>java:jboss/datasources/jmsdemo</jta-data-source>
+		<jta-data-source>java:jboss/datasources/javaee6</jta-data-source>
 		
 		<class>com.sivalabs.javaee6demo.entities.Address</class>
 		<class>com.sivalabs.javaee6demo.entities.Customer</class>
