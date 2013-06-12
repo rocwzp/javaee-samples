@@ -1,0 +1,21 @@
+<!DOCTYPE html> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"> 
+
+<h:head></h:head> 
+<body> 
+	<h:form>
+		<h:panelGrid columns="2">
+			<h:outputLabel value="Message:" />
+			<p:inputTextarea value="#{messageController.name}" />
+			
+			<p:commandButton value="Submit" update="display" />
+			<h:outputText id="display" value="#{messageController.name}"/>
+			
+		</h:panelGrid>
+	</h:form>
+</body> 
+</html>
