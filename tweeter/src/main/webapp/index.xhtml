@@ -2,25 +2,28 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets"> 
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"> 
 
 <h:head>
 </h:head> 
 <body> 
 	
-	<h:form>
-		<h:messages />
+	<h:form style="width: 500px; margin: 0 auto;">
+		<p:panel header="User Login Form">
+		<p:messages/>
 		<h:panelGrid columns="2" title="User Login Form">
-			<h:outputLabel value="UserName :" />
-			<h:inputText value="#{loginBean.userName}" />
+			<h:outputLabel value="Email :" />
+			<p:inputText value="#{loginBean.email}" required="true" label="Email" requiredMessage="Email is required"/>
 			
 			<h:outputLabel value="Password :" />
-			<h:inputSecret value="#{loginBean.password}" />
+			<p:password value="#{loginBean.password}" required="true" label="Password" requiredMessage="Password is required"/>
 			
-			<h:commandButton value="Login" action="#{loginBean.login}" />
-			<h:commandButton value="Reset" type="reset"/>
+			<p:commandButton value="Login" action="#{loginBean.login}" update="@form"/>
+			<p:commandButton value="Reset" type="reset"/>
 			
-		</h:panelGrid>		
+		</h:panelGrid>	
+		</p:panel>	
 	</h:form>
 	
 </body> 

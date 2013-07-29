@@ -15,6 +15,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<slf4j.version>1.6.4</slf4j.version>
 		<log4j.version>1.2.16</log4j.version>
+		<primefaces.version>3.5</primefaces.version>
 
 	</properties>
 
@@ -32,7 +33,15 @@
 			</plugin>
 		</plugins>
 	</build>
-
+	
+	<repositories>
+        <repository>
+            <id>prime-repo</id>
+            <name>PrimeFaces Maven Repository</name>
+            <url>http://repository.primefaces.org</url>
+        </repository>
+    </repositories>
+    
 	<dependencies>
 
 		<dependency>
@@ -68,6 +77,12 @@
 			<scope>provided</scope>
 		</dependency>
 
+		<dependency>
+            <groupId>org.primefaces</groupId>
+            <artifactId>primefaces</artifactId>
+            <version>${primefaces.version}</version>
+        </dependency>
+        
 	</dependencies>
 
 </project>
