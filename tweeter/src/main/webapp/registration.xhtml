@@ -1,0 +1,37 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	template="/publicTemplate.xhtml">
+
+	<ui:define name="bodyContent">
+	
+		<h:form style="width: 350px; margin: 0 auto;">
+		<p:panel header="User Registration Form">
+		<p:messages globalOnly="true"/>
+		<h:panelGrid columns="3">
+			<h:outputLabel value="Email :" />
+			<p:inputText id="email" value="#{userBean.registrationUser.email}" required="true" label="Email" requiredMessage="Email is required"/>
+			<p:message for="email" display="icon"/>
+			
+			<h:outputLabel value="Password :" />
+			<p:password id="password" value="#{userBean.registrationUser.password}" required="true" label="Password" requiredMessage="Password is required"/>
+			<p:message for="password" display="icon"/>
+			
+			<h:outputLabel value="Name :" />
+			<p:inputText id="name" value="#{userBean.registrationUser.name}" required="true" label="Name" requiredMessage="Name is required"/>
+			<p:message for="name" display="icon"/>
+			
+			<p:commandButton value="Register" action="#{userBean.register}" update="@form"/>
+			<p:commandButton value="Reset" type="reset"/>
+		</h:panelGrid>	
+		<br/>
+		<h:outputLabel value="Existing User? " />
+		<h:link outcome="index" value="Login"/>
+		</p:panel>	
+	</h:form>
+	
+	</ui:define>
+	
+</ui:composition>

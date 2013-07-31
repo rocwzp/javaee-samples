@@ -50,8 +50,9 @@ public class UserEJB {
 		return list.get(0);
 	}
 	
-	public void createUser(User user)
+	public User createUser(User user)
 	{
 		em.persist(user);
+		return user;
 	}
 }

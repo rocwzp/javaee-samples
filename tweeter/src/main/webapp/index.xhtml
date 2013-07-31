@@ -1,30 +1,34 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:p="http://primefaces.org/ui"> 
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	template="/publicTemplate.xhtml">
 
-<h:head>
-</h:head> 
-<body> 
+	<ui:define name="bodyContent">
 	
-	<h:form style="width: 500px; margin: 0 auto;">
+	<h:form style="width: 350px; margin: 0 auto;">
+		<p:growl autoUpdate="true" severity="info" globalOnly="true"/>
 		<p:panel header="User Login Form">
-		<p:messages/>
-		<h:panelGrid columns="2" title="User Login Form">
+		<p:messages globalOnly="true" severity="error"/>
+		<h:panelGrid columns="3" title="User Login Form">
 			<h:outputLabel value="Email :" />
-			<p:inputText value="#{loginBean.email}" required="true" label="Email" requiredMessage="Email is required"/>
-			
+			<p:inputText id="email" value="#{userBean.email}" required="true" label="Email" requiredMessage="Email is required"/>
+			<p:message for="email" display="icon"/>
 			<h:outputLabel value="Password :" />
-			<p:password value="#{loginBean.password}" required="true" label="Password" requiredMessage="Password is required"/>
+			<p:password id="password" value="#{userBean.password}" required="true" label="Password" requiredMessage="Password is required"/>
+			<p:message for="password" display="icon"/>
 			
-			<p:commandButton value="Login" action="#{loginBean.login}" update="@form"/>
+			<p:commandButton value="Login" action="#{userBean.login}" update="@form"/>
 			<p:commandButton value="Reset" type="reset"/>
-			
 		</h:panelGrid>	
+		<br/>
+		<h:outputLabel value="New User? " />
+		<h:link outcome="registration" value="Register"/>
 		</p:panel>	
 	</h:form>
-	
-</body> 
-</html>
+
+</ui:define>
+
+</ui:composition>
+
