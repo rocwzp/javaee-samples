@@ -12,18 +12,18 @@
 		<p:messages globalOnly="true"/>
 		<h:panelGrid columns="3">
 			<h:outputLabel value="Email :" />
-			<p:inputText id="email" value="#{userBean.registrationUser.email}" required="true" label="Email" requiredMessage="Email is required"/>
+			<p:inputText id="email" value="#{userController.registrationUser.email}" required="true" label="Email" requiredMessage="Email is required"/>
 			<p:message for="email" display="icon"/>
 			
 			<h:outputLabel value="Password :" />
-			<p:password id="password" value="#{userBean.registrationUser.password}" required="true" label="Password" requiredMessage="Password is required"/>
+			<p:password id="password" value="#{userController.registrationUser.password}" required="true" label="Password" requiredMessage="Password is required"/>
 			<p:message for="password" display="icon"/>
 			
 			<h:outputLabel value="Name :" />
-			<p:inputText id="name" value="#{userBean.registrationUser.name}" required="true" label="Name" requiredMessage="Name is required"/>
+			<p:inputText id="name" value="#{userController.registrationUser.name}" required="true" label="Name" requiredMessage="Name is required"/>
 			<p:message for="name" display="icon"/>
 			
-			<p:commandButton value="Register" action="#{userBean.register}" update="@form"/>
+			<p:commandButton value="Register" action="#{userController.register}" update="@form"/>
 			<p:commandButton value="Reset" type="reset"/>
 		</h:panelGrid>	
 		<br/>

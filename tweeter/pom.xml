@@ -8,7 +8,7 @@
 	<packaging>war</packaging>
 	<version>0.0.1-SNAPSHOT</version>
 	
-	<name>Tweeter: JavaEE Sample Application</name>
+	<name>Tweeter</name>
 	<url>http://sivalabs.blogspot.in</url>
 
 	<properties>

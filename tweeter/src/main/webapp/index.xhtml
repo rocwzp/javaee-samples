@@ -12,14 +12,14 @@
 		<p:panel header="User Login Form">
 		<p:messages globalOnly="true" severity="error"/>
 		<h:panelGrid columns="3" title="User Login Form">
-			<h:outputLabel value="Email :" />
-			<p:inputText id="email" value="#{userBean.email}" required="true" label="Email" requiredMessage="Email is required"/>
+			<h:outputLabel value="Email/UserName :" />
+			<p:inputText id="email" value="#{userController.loginId}" required="true" label="Email/UserName" requiredMessage="Email/UserName is required"/>
 			<p:message for="email" display="icon"/>
 			<h:outputLabel value="Password :" />
-			<p:password id="password" value="#{userBean.password}" required="true" label="Password" requiredMessage="Password is required"/>
+			<p:password id="password" value="#{userController.password}" required="true" label="Password" requiredMessage="Password is required"/>
 			<p:message for="password" display="icon"/>
 			
-			<p:commandButton value="Login" action="#{userBean.login}" update="@form"/>
+			<p:commandButton value="Login" action="#{userController.login}" update="@form"/>
 			<p:commandButton value="Reset" type="reset"/>
 		</h:panelGrid>	
 		<br/>

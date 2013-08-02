@@ -1,11 +1,42 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets"> 
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	template="/publicTemplate.xhtml">
 
-<h:head></h:head> 
-<body> 
-<h1>Welcome #{loginBean.email} </h1>
-</body> 
-</html>
+	<ui:define name="bodyContent">
+	
+		<h:form id="form1" style="width: 800px; margin: 0 auto;">
+						
+			<p:panel header="Tweets">
+				<ui:remove>
+				
+				<f:facet name="actions">  
+					
+					<h:outputLink styleClass="ui-panel-titlebar-icon ui-corner-all ui-state-default" 
+								 value="javascript:void(0)" onclick="helpWidget.show()">  
+						<h:outputText styleClass="ui-icon ui-icon-help" />  
+					</h:outputLink>
+				   
+				</f:facet>
+				</ui:remove>
+				
+				<p:inputTextarea id="tweetmsg" value="#{tweeterController.newTweet.message}" rows="5" cols="100" 
+								counter="counter" maxlength="500" 
+								counterTemplate="{0} characters remaining." 
+								autoResize="false"/><br/>
+				<h:outputText id="counter" /><br/>
+				<p:commandButton value="Submit" action="#{tweeterController.saveTweet()}" update="@all"/>
+				
+				<p:dataList id="tweetsList" var="tweet" value="#{tweeterController.tweets}" itemType="none">
+					#{tweet.message}<br/>
+					<b>Posted By: #{tweet.createdBy.name}</b>
+				</p:dataList>
+				
+			</p:panel>
+		</h:form>
+	
+	</ui:define>
+	
+</ui:composition>

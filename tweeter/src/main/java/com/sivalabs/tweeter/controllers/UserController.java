@@ -3,6 +3,7 @@ package com.sivalabs.tweeter.controllers;
 import java.io.Serializable;
 
 import javax.enterprise.context.SessionScoped;
+import javax.enterprise.inject.Produces;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
@@ -11,30 +12,32 @@ import javax.inject.Named;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.sivalabs.tweeter.ejbs.UserEJB;
+import com.sivalabs.tweeter.ejbs.TweeterServiceBean;
 import com.sivalabs.tweeter.entities.User;
+import com.sivalabs.tweeter.qualifiers.LoggedinUser;
 
 @Named
 @SessionScoped
-public class UserBean implements Serializable
+public class UserController implements Serializable
 {
 	private static final long serialVersionUID = 1L;
 	private Logger logger = LoggerFactory.getLogger(getClass());
 	
 	@Inject
-	private UserEJB userEJB;
+	private TweeterServiceBean tweeterServiceBean;
 	
 	private User loginUser;
 	private User registrationUser;
-	private String email;
+	private String loginId;
 	private String password;
 	
     public String login()
     {
-    	logger.debug("email :{}, Password: {}", email, password);
+    	logger.debug("loginId :{}, Password: {}", loginId, password);
     	String view="index";
-    	User user = userEJB.login(email, password);
+    	User user = tweeterServiceBean.login(loginId, password);
     	if(user != null){
+    		loginUser = user;
     		view = "home.jsf?faces-redirect=true";
     	} else {
     		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Invalid UserName and Password", null));
@@ -45,7 +48,7 @@ public class UserBean implements Serializable
     public String register()
     {
     	String view="registration";
-    	User user = userEJB.createUser(registrationUser);
+    	User user = tweeterServiceBean.createUser(registrationUser);
     	if(user != null){
     		view = "index.jsf?faces-redirect=true";
     		registrationUser = null;
@@ -57,6 +60,9 @@ public class UserBean implements Serializable
     	return view;
     }
     
+    @Named("loginUser")
+    @LoggedinUser
+    @Produces
 	public User getLoginUser() {
 		return loginUser;
 	}
@@ -76,13 +82,17 @@ public class UserBean implements Serializable
 	{
 		this.registrationUser = registrationUser;
 	}
+	
+	public String getLoginId()
+	{
+		return loginId;
+	}
 
-	public String getEmail() {
-		return email;
+	public void setLoginId(String loginId)
+	{
+		this.loginId = loginId;
 	}
-	public void setEmail(String email) {
-		this.email = email;
-	}
+
 	public String getPassword()
 	{
 		return password;
