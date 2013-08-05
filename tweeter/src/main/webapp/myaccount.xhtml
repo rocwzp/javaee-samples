@@ -1,0 +1,78 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	template="/masterTemplate.xhtml">
+
+	<ui:define name="bodyContent">
+		<p:growl autoUpdate="true" severity="info"/>
+		
+		<p:tabView>
+				<p:tab id="tab1" title="MyProfile">
+					<h:form >
+						<p:panel header="My Profile">
+						<p:messages globalOnly="true"/>
+						<h:panelGrid columns="3">
+							<h:outputLabel value="Email :" />
+							<p:inputText id="email" value="#{userController.updateUser.email}" size="30"
+										required="true" label="Email" requiredMessage="Email is required"/>
+							<p:message for="email" display="icon"/>
+							
+							<h:outputLabel value="Name :" />
+							<p:inputText id="name" value="#{userController.updateUser.name}" size="30"
+										required="true" label="Name" requiredMessage="Name is required"/>
+							<p:message for="name" display="icon"/>
+							
+							<p:commandButton value="Save" action="#{userController.updateUser}" update="@form"/>
+						</h:panelGrid>	
+						
+						</p:panel>	
+					</h:form>
+				</p:tab>
+				<p:tab id="tab2" title="Change Password">
+					<h:form >
+						<p:panel header="Change Password">
+						<p:messages showDetail="true"/>
+						<h:panelGrid columns="2">
+							
+							<h:outputLabel value="Old Password :" />
+							<p:password id="oldPwd" value="#{userController.changePasswordBean.oldPwd}" size="30"
+										required="true" label="Old Password" requiredMessage="Old Password is required"/>
+							
+							<h:outputLabel value="New Password :" />
+							<p:password id="newPwd" value="#{userController.changePasswordBean.newPwd}" size="30"
+										required="true" label="New Password" requiredMessage="New Password is required"
+										match="confPwd"/>
+							
+							<h:outputLabel value="Confirm Password :" />
+							<p:password id="confPwd" value="#{userController.changePasswordBean.confPwd}" size="30"
+										required="true" label="Confirm Password" requiredMessage="Confirm Password is required"/>
+							
+							<p:commandButton value="Save" action="#{userController.changePwd()}" update="@form"/>
+						</h:panelGrid>	
+						
+						</p:panel>	
+					</h:form>
+			
+				</p:tab>
+				<p:tab id="tab3" title="My Tweets">
+					<p:panel header="My Tweets" >
+				
+						<p:dataList id="tweetsList" var="tweet" value="#{tweeterController.myTweets}" type="none"
+								style="padding-left: 1px; padding-right: 1px;"
+								paginator="true" rows="10">
+							<p:panel>
+							#{tweet.message}<br/>
+							<b>Posted By: #{tweet.createdBy.name}</b>
+							</p:panel>
+						</p:dataList>
+						
+					</p:panel>
+				</p:tab>
+				
+			</p:tabView>
+	
+	</ui:define>
+	
+</ui:composition>

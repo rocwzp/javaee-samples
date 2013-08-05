@@ -3,40 +3,48 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui"
-	template="/publicTemplate.xhtml">
+	template="/masterTemplate.xhtml">
 
 	<ui:define name="bodyContent">
-	
-		<h:form id="form1" style="width: 800px; margin: 0 auto;">
-						
-			<p:panel header="Tweets">
-				<ui:remove>
+		<p:growl autoUpdate="true" severity="info"/>
+
+		<h:panelGrid columns="2" styleClass="mytable">
+			<h:form id="form1" style="width: 320px; margin: 0 auto;">
 				
-				<f:facet name="actions">  
-					
-					<h:outputLink styleClass="ui-panel-titlebar-icon ui-corner-all ui-state-default" 
-								 value="javascript:void(0)" onclick="helpWidget.show()">  
-						<h:outputText styleClass="ui-icon ui-icon-help" />  
-					</h:outputLink>
-				   
-				</f:facet>
-				</ui:remove>
-				
-				<p:inputTextarea id="tweetmsg" value="#{tweeterController.newTweet.message}" rows="5" cols="100" 
+				<p:messages autoUpdate="true" severity="error"/>
+				<p:panel header="Post New Tweet">
+					<h:panelGrid columns="1">
+						<p:inputTextarea id="tweetmsg" value="#{tweeterController.newTweet.message}" 
+								required="true" requiredMessage="Please enter Message"
+								rows="5" cols="50" 
 								counter="counter" maxlength="500" 
 								counterTemplate="{0} characters remaining." 
-								autoResize="false"/><br/>
-				<h:outputText id="counter" /><br/>
-				<p:commandButton value="Submit" action="#{tweeterController.saveTweet()}" update="@all"/>
+								/>
+						<h:outputText id="counter" />
+						<p:commandButton value="Submit" action="#{tweeterController.saveTweet()}" update="@form"/>
+					</h:panelGrid>
+				</p:panel>
 				
-				<p:dataList id="tweetsList" var="tweet" value="#{tweeterController.tweets}" itemType="none">
+			</h:form>
+			
+			<p:panel header="Tweets" style="width: 650px">
+				
+				<p:dataList id="tweetsList" var="tweet" value="#{tweeterController.tweets}" type="none"
+						style="padding-left: 1px; padding-right: 1px;"
+						paginator="true" rows="10">
+					<p:panel>
 					#{tweet.message}<br/>
 					<b>Posted By: #{tweet.createdBy.name}</b>
+					</p:panel>
 				</p:dataList>
 				
 			</p:panel>
+			
+		</h:panelGrid>
+		<h:form>
+			<p:poll interval="30" listener="#{tweeterController.loadAllTweets()}" update=":tweetsList"></p:poll>
 		</h:form>
-	
+		
 	</ui:define>
 	
 </ui:composition>

@@ -4,9 +4,11 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
-import javax.enterprise.context.RequestScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
-import javax.inject.Named;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,8 +22,8 @@ import com.sivalabs.tweeter.qualifiers.LoggedinUser;
  * @author Siva
  *
  */
-@Named
-@RequestScoped
+@ManagedBean
+@ViewScoped
 public class TweeterController implements Serializable
 {
 	private static final long serialVersionUID = 1L;
@@ -41,6 +43,11 @@ public class TweeterController implements Serializable
 	@PostConstruct
 	void init()
 	{
+		loadAllTweets();
+	}
+	
+	public void loadAllTweets()
+	{
 		logger.info("Loading all Tweets..");
 		tweets = tweeterServiceBean.getTweets();
 		if(loginUser != null){
@@ -54,13 +61,7 @@ public class TweeterController implements Serializable
 		//System.err.println("----------->"+newTweet);
 		tweeterServiceBean.createTweet(newTweet);
 		newTweet = null;
-		logger.info("Loading all Tweets..");
-		tweets = tweeterServiceBean.getTweets();
-		if(loginUser != null){
-			logger.info("Getting Tweets for UserId :"+loginUser.getId());
-			myTweets = tweeterServiceBean.getUserTweets(loginUser.getId());
-		}
-		
+		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Messaged Posted Successfully"));
 	}
 	
 	public Tweet getNewTweet()
@@ -69,7 +70,6 @@ public class TweeterController implements Serializable
 			newTweet = new Tweet();
 			newTweet.setCreatedBy(loginUser);
 		}
-		//System.err.println("getNewTweet----------->"+newTweet);
 		return newTweet;
 	}
 	public void setNewTweet(Tweet newTweet)

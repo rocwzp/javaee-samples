@@ -9,11 +9,13 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 import com.sivalabs.tweeter.entities.Tweet;
 import com.sivalabs.tweeter.entities.User;
 import com.sivalabs.tweeter.exceptions.TweeterException;
+import com.sivalabs.tweeter.view.ChangePasswordBean;
 
 /**
  * @author Siva
@@ -100,6 +102,26 @@ public class TweeterServiceBean
 			return null;
 		}
 		return new ArrayList<Tweet>(user.getTweets());
+	}
+
+	public boolean updatePassword(ChangePasswordBean changePasswordBean)
+	{
+		Query query = em.createQuery("update User u set u.password=:newPwd where u.id=:id and u.password=:oldPwd");
+		query.setParameter("id", changePasswordBean.getUserId());
+		query.setParameter("oldPwd", changePasswordBean.getOldPwd());
+		query.setParameter("newPwd", changePasswordBean.getNewPwd());
+		
+		return query.executeUpdate()>0;
+	}
+
+	public User updateUser(User updateUser)
+	{
+		if(this.getUserById(updateUser.getId()) != null){
+			em.merge(updateUser);
+			return updateUser;
+		}
+		return null;
+		
 	}
 	
 }

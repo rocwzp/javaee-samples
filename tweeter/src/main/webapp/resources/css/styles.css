@@ -1,6 +1,6 @@
 
 #wrapper{
-   width:800px;
+   width:1000px;
    margin:0 auto;
    text-align:left;
 }
@@ -9,7 +9,7 @@
     height:50px;
     background:#F0F0F0;
     border:1px solid #CCC;
-    width:800px;
+    width:1000px;
     margin:5px auto;
 }
 

@@ -8,6 +8,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,6 +16,7 @@ import org.slf4j.LoggerFactory;
 import com.sivalabs.tweeter.ejbs.TweeterServiceBean;
 import com.sivalabs.tweeter.entities.User;
 import com.sivalabs.tweeter.qualifiers.LoggedinUser;
+import com.sivalabs.tweeter.view.ChangePasswordBean;
 
 @Named
 @SessionScoped
@@ -28,8 +30,11 @@ public class UserController implements Serializable
 	
 	private User loginUser;
 	private User registrationUser;
+	private User updateUser;
+	
 	private String loginId;
 	private String password;
+	private ChangePasswordBean changePasswordBean;
 	
     public String login()
     {
@@ -38,6 +43,7 @@ public class UserController implements Serializable
     	User user = tweeterServiceBean.login(loginId, password);
     	if(user != null){
     		loginUser = user;
+    		updateUser = this.tweeterServiceBean.getUserById(loginUser.getId());
     		view = "home.jsf?faces-redirect=true";
     	} else {
     		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Invalid UserName and Password", null));
@@ -45,6 +51,11 @@ public class UserController implements Serializable
     	return view;
     }
 
+    public String logout()
+    {
+    	((HttpSession)FacesContext.getCurrentInstance().getExternalContext().getSession(true)).invalidate();
+    	return "index.jsf?faces-redirect=true";
+    }
     public String register()
     {
     	String view="registration";
@@ -58,6 +69,29 @@ public class UserController implements Serializable
     		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Invalid UserName and Password", null));
     	}
     	return view;
+    }
+    
+    public String updateUser()
+    {
+    	User user = tweeterServiceBean.updateUser(updateUser);
+    	if(user != null){
+    		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Successfully Updated", null));
+    	} else {
+    		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "User Update Failed", null));
+    	}
+    	return null;
+    }
+    
+    public String changePwd()
+    {
+    	boolean success = tweeterServiceBean.updatePassword(changePasswordBean);
+    	if(success){
+    		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Password Changed Successfully", null));
+    		changePasswordBean = null;
+    	}else {
+    		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Password Change Unsuccessful", null));
+    	}
+    	return null;
     }
     
     @Named("loginUser")
@@ -101,4 +135,33 @@ public class UserController implements Serializable
 	{
 		this.password = password;
 	}
+
+	public User getUpdateUser()
+	{
+		if(loginUser == null)
+		{
+			updateUser = new User();
+		}
+		return updateUser;
+	}
+
+	public void setUpdateUser(User updateUser)
+	{
+		this.updateUser = updateUser;
+	}
+
+	public ChangePasswordBean getChangePasswordBean()
+	{
+		if(changePasswordBean == null){
+			changePasswordBean = new ChangePasswordBean();
+			changePasswordBean.setUserId(loginUser.getId());
+		}
+		return changePasswordBean;
+	}
+
+	public void setChangePasswordBean(ChangePasswordBean changePasswordBean)
+	{
+		this.changePasswordBean = changePasswordBean;
+	}
+	
 }

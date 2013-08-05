@@ -24,6 +24,21 @@
 				<h1>Tweeter</h1>
 			</div>
 			<div class="ui-panel ui-widget ui-widget-content ui-corner-all" style="margin-bottom: 3px; min-height: 500px;">
+				
+				<h:form>  
+				  <p:toolbar>  
+				    <p:toolbarGroup align="left">  
+				        <p:commandButton ajax="false" value="Home" icon="ui-icon-home" action="home.jsf?faces-redirect=true"/>  
+				        <p:commandButton ajax="false" value="MyAccount" icon="ui-icon-person" action="myaccount.jsf?faces-redirect=true"/>  
+				    </p:toolbarGroup>  
+				  
+				    <p:toolbarGroup align="right">  
+				       <p:commandButton ajax="false" value="Logout" action="#{userController.logout}"/>
+				    </p:toolbarGroup>  
+				  
+				  </p:toolbar>  
+				</h:form>
+				
 				<ui:insert name="bodyContent"/> 
 			</div>
     		
