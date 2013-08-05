@@ -44,11 +44,11 @@ public class TweeterServiceBean
 	
 	public User createUser(User user)
 	{
-		boolean userNameExists = em.createQuery("select count(u) > 0 from User u where u.userName = "+user.getUserName(), Boolean.class).getSingleResult();
+		boolean userNameExists = em.createQuery("select count(u) from User u where u.userName = '"+user.getUserName()+"'", Long.class).getSingleResult() > 0;
 		if(userNameExists){
 			throw new TweeterException("UserName ["+user.getUserName()+"] already exists.");
 		}
-		boolean emailExists = em.createQuery("select count(u) > 0 from User u where u.email = "+user.getEmail(), Boolean.class).getSingleResult();
+		boolean emailExists = em.createQuery("select count(u) from User u where u.email = '"+user.getEmail()+"'", Long.class).getSingleResult() > 0;
 		if(emailExists){
 			throw new TweeterException("Email ["+user.getEmail()+"] already exists.");
 		}

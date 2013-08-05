@@ -11,13 +11,18 @@
 		<p:panel header="User Registration Form">
 		<p:messages globalOnly="true"/>
 		<h:panelGrid columns="3">
-			<h:outputLabel value="Email :" />
-			<p:inputText id="email" value="#{userController.registrationUser.email}" required="true" label="Email" requiredMessage="Email is required"/>
-			<p:message for="email" display="icon"/>
+			
+			<h:outputLabel value="UserName :" />
+			<p:inputText id="userName" value="#{userController.registrationUser.userName}" required="true" label="UserName" requiredMessage="UserName is required"/>
+			<p:message for="userName" display="icon"/>
 			
 			<h:outputLabel value="Password :" />
 			<p:password id="password" value="#{userController.registrationUser.password}" required="true" label="Password" requiredMessage="Password is required"/>
 			<p:message for="password" display="icon"/>
+			
+			<h:outputLabel value="Email :" />
+			<p:inputText id="email" value="#{userController.registrationUser.email}" required="true" label="Email" requiredMessage="Email is required"/>
+			<p:message for="email" display="icon"/>
 			
 			<h:outputLabel value="Name :" />
 			<p:inputText id="name" value="#{userController.registrationUser.name}" required="true" label="Name" requiredMessage="Name is required"/>
