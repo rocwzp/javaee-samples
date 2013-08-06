@@ -92,7 +92,7 @@ public class TweeterServiceBean
 	
 	public List<Tweet> getTweets()
 	{
-		return em.createQuery("select t from Tweet t order by createdOn desc", Tweet.class).getResultList();
+		return em.createQuery("select t from Tweet t order by t.createdOn desc", Tweet.class).getResultList();
 	}
 	
 	public List<Tweet> getUserTweets(Integer userId)
