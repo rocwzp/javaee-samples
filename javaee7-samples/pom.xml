@@ -129,5 +129,6 @@
   </dependencyManagement>
 	<modules>
 		<module>cdi-sample</module>
-	</modules>
+    <module>bookstore</module>
+  </modules>
 </project>
