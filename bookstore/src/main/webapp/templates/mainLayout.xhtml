@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <f:view contentType="text/html">
+        <h:head>
+            <f:facet name="first">
+                <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
+                <title>BookStore</title>
+            </f:facet>
+            <h:outputStylesheet library="css" name="styles.css"/>
+            <ui:insert name="head"/>
+        </h:head>
+
+<h:body>
+
+<table id="mainContainer">
+<tbody>
+
+	<tr>
+		<td class="header">
+			<h2>BookStore</h2>
+		</td>
+	</tr>
+	<tr>
+		<td class="cartbar">
+			<h:form id="cartToolbar">
+			<p:toolbar>
+				<p:toolbarGroup align="right">  
+					<p:button id="cartCount" value="Cart(#{cartController.cartItemCount})" outcome="cart"/>
+				</p:toolbarGroup>
+			</p:toolbar>
+			</h:form>
+		</td>
+	</tr>	
+
+	<tr>
+		<td id="bodyContent">
+			<ui:insert name="body">Page Body</ui:insert>
+		</td>
+	</tr>	
+	
+	<tr>
+		<td class="footer">www.sivalabs.in; Copyright @ 2013</td>
+	</tr>
+</tbody>
+</table>
+
+</h:body>
+</f:view>
+</html>

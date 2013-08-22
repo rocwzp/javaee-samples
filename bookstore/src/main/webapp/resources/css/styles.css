@@ -1,0 +1,36 @@
+
+body
+{
+	background-color: #D4D4D4;
+}
+
+.header
+{
+	background-color: #194396;
+	color: #FFF;
+}
+.footer
+{
+	background-color: #194396;
+	color: #FFF;
+}
+
+#bodyContent
+{
+   min-height: 500px; 
+   height:auto !important; 
+   height: 500px; 
+}
+
+#mainContainer
+{
+	width: 1000px;
+	vertical-align: top;
+	border=0px; 
+	margin: auto;
+	background-color: #FFF;
+}
+
+.ui-widget, .ui-widget .ui-widget {
+    font-size: 12px; !important;
+}
