@@ -7,7 +7,7 @@ package com.sivalabs.bookstore.entities;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
-import javax.persistence.Basic;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,15 +15,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -32,20 +29,31 @@ import javax.xml.bind.annotation.XmlTransient;
 @Entity
 @Table(name = "orders")
 @XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "CustomerOrder.findAll", query = "SELECT c FROM CustomerOrder c"),
-    @NamedQuery(name = "CustomerOrder.findById", query = "SELECT c FROM CustomerOrder c WHERE c.id = :id"),
-    @NamedQuery(name = "CustomerOrder.findByCreatedOn", query = "SELECT c FROM CustomerOrder c WHERE c.createdOn = :createdOn"),
-    @NamedQuery(name = "CustomerOrder.findByUpdatedOn", query = "SELECT c FROM CustomerOrder c WHERE c.updatedOn = :updatedOn"),
-    @NamedQuery(name = "CustomerOrder.findByStatus", query = "SELECT c FROM CustomerOrder c WHERE c.status = :status")})
-public class CustomerOrder implements Serializable {
+public class Order implements Serializable 
+{
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name = "id")
+    @Column(name = "order_id")
     private Integer id;
-    @Basic(optional = false)
+    
+    @JoinColumn(name = "cust_id", referencedColumnName = "cust_id")
+    @ManyToOne(optional = false)
+    private Customer customer;
+    @JoinColumn(name = "recipient_id", referencedColumnName = "cust_id")
+    @ManyToOne(optional = false)
+    private Customer recipient;
+    
+    @JoinColumn(name = "payment_id", referencedColumnName = "payment_id")
+    @ManyToOne(optional = false)
+    private Payment payment;
+    
+    @Column(name = "status")
+    private Integer status;
+    @OneToMany
+    @JoinColumn(name="order_id", nullable=false)
+    private Set<OrderItem> orderItems;
+    
     @NotNull
     @Column(name = "created_on")
     @Temporal(TemporalType.TIMESTAMP)
@@ -53,28 +61,16 @@ public class CustomerOrder implements Serializable {
     @Column(name = "updated_on")
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedOn;
-    @Column(name = "status")
-    private Integer status;
-    @OneToMany(mappedBy = "orderId")
-    private Set<OrderItem> orderItems;
-    @JoinColumn(name = "cust_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private Customer custId;
-    @JoinColumn(name = "payment_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private Payment paymentId;
-    @JoinColumn(name = "recipient_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private Customer recipientId;
-
-    public CustomerOrder() {
+    
+    
+    public Order() {
     }
 
-    public CustomerOrder(Integer id) {
+    public Order(Integer id) {
         this.id = id;
     }
 
-    public CustomerOrder(Integer id, Date createdOn) {
+    public Order(Integer id, Date createdOn) {
         this.id = id;
         this.createdOn = createdOn;
     }
@@ -111,7 +107,6 @@ public class CustomerOrder implements Serializable {
         this.status = status;
     }
 
-    @XmlTransient
     public Set<OrderItem> getOrderItems() {
         return orderItems;
     }
@@ -120,31 +115,37 @@ public class CustomerOrder implements Serializable {
         this.orderItems = orderItems;
     }
 
-    public Customer getCustId() {
-        return custId;
-    }
+    public Customer getCustomer()
+	{
+		return customer;
+	}
 
-    public void setCustId(Customer custId) {
-        this.custId = custId;
-    }
+	public void setCustomer(Customer customer)
+	{
+		this.customer = customer;
+	}
 
-    public Payment getPaymentId() {
-        return paymentId;
-    }
+	public Customer getRecipient()
+	{
+		return recipient;
+	}
 
-    public void setPaymentId(Payment paymentId) {
-        this.paymentId = paymentId;
-    }
+	public void setRecipient(Customer recipient)
+	{
+		this.recipient = recipient;
+	}
 
-    public Customer getRecipientId() {
-        return recipientId;
-    }
+	public Payment getPayment()
+	{
+		return payment;
+	}
 
-    public void setRecipientId(Customer recipientId) {
-        this.recipientId = recipientId;
-    }
+	public void setPayment(Payment payment)
+	{
+		this.payment = payment;
+	}
 
-    @Override
+	@Override
     public int hashCode() {
         int hash = 0;
         hash += (id != null ? id.hashCode() : 0);
@@ -153,20 +154,16 @@ public class CustomerOrder implements Serializable {
 
     @Override
     public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof CustomerOrder)) {
+        if (!(object instanceof Order)) {
             return false;
         }
-        CustomerOrder other = (CustomerOrder) object;
+        Order other = (Order) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
         return true;
     }
 
-    @Override
-    public String toString() {
-        return "com.sivalabs.bookstore.entities.CustomerOrder[ id=" + id + " ]";
-    }
+  
     
 }
