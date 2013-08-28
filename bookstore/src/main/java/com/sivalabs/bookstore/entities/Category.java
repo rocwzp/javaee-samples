@@ -7,6 +7,7 @@ package com.sivalabs.bookstore.entities;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -20,6 +21,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -51,8 +54,28 @@ public class Category implements Serializable {
     
     @OneToMany(mappedBy = "category")
     private Set<Product> products;
-
-    public Category() {
+    
+    @XmlTransient
+    public Category getCopy()
+    {
+    	Category category = new Category();
+    	category.setId(id);
+    	category.setName(name);
+    	category.setDescription(description);
+    	category.setCreatedOn(createdOn);
+    	category.setUpdatedOn(updatedOn);
+    	if(products != null)
+    	{
+    		for (Product product : products) 
+    		{
+    			category.addProduct(product.getCopy());
+			}
+    	}
+    	
+    	return category;
+    }
+    
+	public Category() {
     }
 
     public Category(Integer id) {
@@ -99,17 +122,27 @@ public class Category implements Serializable {
         this.name = name;
     }
 
-    @XmlTransient
+    //@XmlTransient
+    @XmlElement(name="product")
+	@XmlElementWrapper(name="products")
     public Set<Product> getProducts() {
+    	if(products == null){
+    		products = new HashSet<Product>();
+    	}
         return products;
     }
+    
+    @XmlTransient
     public List<Product> getProductsList() {
         return new ArrayList<Product>(products);
     }
-    public void setProducts(Set<Product> productSet) {
-        this.products = productSet;
+    public void setProducts(Set<Product> products) {
+        this.products = products;
     }
-
+    public void addProduct(Product product) {
+    	getProducts().add(product);
+	}
+    
     @Override
     public int hashCode() {
         int hash = 0;

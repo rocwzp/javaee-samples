@@ -20,6 +20,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -121,7 +122,7 @@ public class Product implements Serializable {
 	{
 		this.imageUrl = imageUrl;
 	}
-	
+	@XmlTransient
     public Category getCategory()
 	{
 		return category;
@@ -150,5 +151,19 @@ public class Product implements Serializable {
         }
         return true;
     }
+
+	public Product getCopy() {
+		Product product = new Product();
+		product.setId(id);
+		product.setName(name);
+		product.setPrice(price);
+		product.setDescription(description);
+		product.setImageUrl(imageUrl);
+		product.setCreatedOn(createdOn);
+		product.setUpdatedOn(updatedOn);
+		//product.setCategory(category);
+		
+		return product;
+	}
     
 }

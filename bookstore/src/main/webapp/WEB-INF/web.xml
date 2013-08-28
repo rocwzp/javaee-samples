@@ -26,7 +26,7 @@
     <session-config>
         <session-timeout>30</session-timeout>
     </session-config>
-    
+   
     <data-source>
 	    <name>java:/jdbc/bookstore</name>
 	    <class-name>com.mysql.jdbc.jdbc2.optional.MysqlXADataSource</class-name>
