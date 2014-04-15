@@ -39,10 +39,10 @@ public class Category implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "cat_id")
     private Integer id;
-    @Size(max = 255)
+    @Size(max = 100)
     @Column(name = "name")
     private String name;
-    @Size(max = 255)
+    @Size(max = 512)
     @Column(name = "description")
     private String description;    
     @Column(name = "created_on")
@@ -136,6 +136,7 @@ public class Category implements Serializable {
     public List<Product> getProductsList() {
         return new ArrayList<Product>(products);
     }
+    
     public void setProducts(Set<Product> products) {
         this.products = products;
     }
@@ -152,7 +153,6 @@ public class Category implements Serializable {
 
     @Override
     public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
         if (!(object instanceof Category)) {
             return false;
         }

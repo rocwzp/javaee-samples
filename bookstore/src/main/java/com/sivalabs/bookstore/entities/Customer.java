@@ -10,7 +10,6 @@ import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -37,18 +36,19 @@ public class Customer implements Serializable
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "cust_id")
     private Integer id;
-    // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
-    @Size(max = 255)
+    @Size(max = 100)
     @Column(name = "email")
     private String email;
-    @Size(max = 255)
-    @Column(name = "firstName")
+    @Size(max = 50)
+    @Column(name = "password")
+    private String password;
+    @Size(max = 50)
+    @Column(name = "firstname")
     private String firstName;
-    @Size(max = 255)
-    @Column(name = "lastName")
+    @Size(max = 50)
+    @Column(name = "lastname")
     private String lastName;
-    // @Pattern(regexp="^\\(?(\\d{3})\\)?[- ]?(\\d{3})[- ]?(\\d{4})$", message="Invalid phone/fax format, should be as xxx-xxx-xxxx")//if the field contains phone or fax number consider using this annotation to enforce field validation
-    @Size(max = 255)
+    @Size(max = 15)
     @Column(name = "phone")
     private String phone;
     @Column(name = "created_on")
@@ -58,13 +58,8 @@ public class Customer implements Serializable
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedOn;
     
-    @Embedded
-    private Address address;
-    
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "customer")
     private Set<Order> orders;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "recipient")
-    private Set<Order> receivedOrders;
     
 
     public Customer() {
@@ -138,24 +133,6 @@ public class Customer implements Serializable
     public void setOrders(Set<Order> customerOrderSet) {
         this.orders = customerOrderSet;
     }
-
-    @XmlTransient
-    public Set<Order> getReceivedOrders() {
-        return receivedOrders;
-    }
-
-    public void setReceivedOrders(Set<Order> receivedOrders) {
-        this.receivedOrders = receivedOrders;
-    }
-
-    public Address getAddress()
-	{
-		return address;
-	}
-	public void setAddress(Address address)
-	{
-		this.address = address;
-	}
 
     @Override
     public int hashCode() {

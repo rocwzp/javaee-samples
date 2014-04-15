@@ -40,9 +40,14 @@ public class Order implements Serializable
     @JoinColumn(name = "cust_id", referencedColumnName = "cust_id")
     @ManyToOne(optional = false)
     private Customer customer;
-    @JoinColumn(name = "recipient_id", referencedColumnName = "cust_id")
+    
+    @JoinColumn(name = "billing_addr_id", referencedColumnName = "addr_id")
     @ManyToOne(optional = false)
-    private Customer recipient;
+    private Address billingAddress;
+    
+    @JoinColumn(name = "shipping_addr_id", referencedColumnName = "addr_id")
+    @ManyToOne(optional = false)
+    private Address shippingAddress;
     
     @JoinColumn(name = "payment_id", referencedColumnName = "payment_id")
     @ManyToOne(optional = false)
@@ -125,14 +130,20 @@ public class Order implements Serializable
 		this.customer = customer;
 	}
 
-	public Customer getRecipient()
-	{
-		return recipient;
+	public Address getBillingAddress() {
+		return billingAddress;
 	}
 
-	public void setRecipient(Customer recipient)
-	{
-		this.recipient = recipient;
+	public void setBillingAddress(Address billingAddress) {
+		this.billingAddress = billingAddress;
+	}
+
+	public Address getShippingAddress() {
+		return shippingAddress;
+	}
+
+	public void setShippingAddress(Address shippingAddress) {
+		this.shippingAddress = shippingAddress;
 	}
 
 	public Payment getPayment()

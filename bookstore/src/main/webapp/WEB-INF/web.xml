@@ -5,8 +5,8 @@
             http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
     
     <welcome-file-list>
-        <welcome-file>login.jsf</welcome-file>
         <welcome-file>index.html</welcome-file>
+        <welcome-file>login.jsf</welcome-file>
     </welcome-file-list>
     
     <context-param>
@@ -21,17 +21,19 @@
     <servlet-mapping>
         <servlet-name>Faces Servlet</servlet-name>
         <url-pattern>*.jsf</url-pattern>
+        <url-pattern>*.xhtml</url-pattern>
     </servlet-mapping>
     
     <session-config>
         <session-timeout>30</session-timeout>
     </session-config>
    
+   <!-- 
     <data-source>
-	    <name>java:/jdbc/bookstore</name>
+	    <name>java:/jdbc/bookstore_javaee</name>
 	    <class-name>com.mysql.jdbc.jdbc2.optional.MysqlXADataSource</class-name>
 	    <server-name>localhost</server-name>
-	    <database-name>bookstore</database-name>
+	    <database-name>bookstore_javaee</database-name>
 	    <user>root</user>
 	    <password>admin</password>
 	    <transactional>true</transactional>
@@ -41,5 +43,6 @@
 	    <min-pool-size>5</min-pool-size>
 	    <max-statements>0</max-statements>
 	</data-source>
-	
+ 	-->
+ 	
 </web-app>

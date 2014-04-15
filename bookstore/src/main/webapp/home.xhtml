@@ -11,10 +11,13 @@
          	<p:growl autoUpdate="true" globalOnly="true"/>
          	<p:dataList value="#{catalogController.categories}" var="category" type="none">
          		<h2>#{category.name}</h2>
-         		<p:dataList value="#{category.productsList}" var="product" type="none">
+         		
+         		<p:dataGrid value="#{category.productsList}" var="product" columns="2"  rows="4" paginator="true"  
+        					rowsPerPageTemplate="5,10,15">
          			
-         			<h:panelGrid columns="2">
-         				<p:graphicImage value="resources/images/book_covers/#{product.imageUrl}" width="150px" height="150px;"/>
+         			<h:panelGrid columns="1">
+         				<p:graphicImage value="resources/images/book_covers/#{product.imageUrl}"
+         					 width="150px" height="180px;"/>
          				<p:panel >
          					<h:panelGrid columns="2">
          						<h:outputLabel value="Title" />
@@ -23,12 +26,13 @@
          						<h:outputLabel value="#{product.description}" />
          						<h:outputLabel value="Price" />
          						<h:outputLabel value="#{product.price}" />
-         						<p:commandButton value="Add To Cart" actionListener="#{cartController.addItem(product)}" update=":cartToolbar:cartCount"/>
+         						<p:commandButton value="Add To Cart" actionListener="#{cartController.addItem(product)}" 
+         									update=":cartToolbar:cartCount"/>
          					</h:panelGrid>
 	         				
          				</p:panel>
          			</h:panelGrid>
-         		</p:dataList>
+         		</p:dataGrid>
          		
          	</p:dataList>
          </h:form>
