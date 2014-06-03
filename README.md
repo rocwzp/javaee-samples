@@ -1,4 +1,4 @@
-javaee6-samples
+Java EE- Samples
 ===============
 
-javaee6-samples
+Sample JavaEE apps for demonstration/training.
